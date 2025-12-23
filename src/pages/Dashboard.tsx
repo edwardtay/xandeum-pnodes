@@ -7,6 +7,8 @@ import {
   Settings,
   AlertCircle,
   Filter,
+  X,
+  Shield,
 } from 'lucide-react';
 import { usePNodes } from '../hooks/usePNodes';
 import { useTheme } from '../hooks/useTheme';
@@ -17,6 +19,7 @@ import { ConnectionStatus } from '../components/ConnectionStatus';
 import { VersionChart } from '../components/VersionChart';
 import { StakeChart } from '../components/StakeChart';
 import { NetworkStats } from '../components/NetworkStats';
+import { GeoChart } from '../components/GeoChart';
 import { pnodeService } from '../services/pnode';
 import type { PNode } from '../types';
 
@@ -38,6 +41,7 @@ export const Dashboard: React.FC = () => {
   const [selectedNode, setSelectedNode] = useState<PNode | null>(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
+  const [showLimitations, setShowLimitations] = useState(true);
   const [rpcEndpoint, setRpcEndpoint] = useState(pnodeService.getCentralRpcEndpoint() || '');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -106,6 +110,22 @@ export const Dashboard: React.FC = () => {
         </div>
       )}
 
+      {/* Data Transparency Banner */}
+      {showLimitations && (
+        <div className="info-banner limitations">
+          <Shield size={16} />
+          <div className="limitations-content">
+            <strong>100% Real Data</strong> — All data from live Xandeum RPC. 
+            <span className="limitations-detail">
+              pNode RPC ports (9001) are firewalled; storage/uptime stats unavailable via public API.
+            </span>
+          </div>
+          <button className="dismiss-btn" onClick={() => setShowLimitations(false)}>
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       {/* Stats Cards */}
       <NetworkStats nodes={nodes} />
 
@@ -129,8 +149,9 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Charts */}
-      <div className="charts-row">
+      <div className="charts-grid">
         <VersionChart nodes={filteredNodes} />
+        <GeoChart nodes={nodes} />
         <StakeChart nodes={filteredNodes} />
       </div>
 
