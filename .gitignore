@@ -33,3 +33,4 @@ private/
 
 # OS files
 Thumbs.db
+.vercel
