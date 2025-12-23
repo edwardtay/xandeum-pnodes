@@ -143,8 +143,8 @@ export const Dashboard: React.FC = () => {
           onClick={() => updateFilter('showPNodesOnly', !filters.showPNodesOnly)}
           title="Show pNodes only"
         >
-          <Filter size={14} />
           pNodes Only
+          <Filter size={14} />
         </button>
       </div>
 

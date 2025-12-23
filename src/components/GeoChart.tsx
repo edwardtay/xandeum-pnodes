@@ -35,9 +35,12 @@ export const GeoChart: React.FC<GeoChartProps> = ({ nodes }) => {
 
   if (geoData.length === 0) {
     return (
-      <div className="mini-chart empty">
+      <div className="mini-chart">
+        <div className="mini-chart-header">
+          <span className="mini-chart-title">Geographic Distribution</span>
+        </div>
         <div className="empty-state-mini">
-          <Globe size={20} />
+          <Globe size={20} className="spin-slow" />
           <p>Loading geo data...</p>
         </div>
       </div>

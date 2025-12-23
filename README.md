@@ -4,7 +4,7 @@ Real-time analytics dashboard for monitoring Xandeum pNodes on the Solana networ
 
 ![React](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue) ![Vite](https://img.shields.io/badge/Vite-6-purple)
 
-🔗 **Live Demo:** [xandeum-pnodes.vercel.app](https://xandeum-pnodes.vercel.app)
+🔗 **Live Demo:** [xandeum-pnodes-hq.vercel.app](https://xandeum-pnodes-hq.vercel.app)
 
 ## Features
 

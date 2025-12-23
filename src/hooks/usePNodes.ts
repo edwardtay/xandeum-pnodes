@@ -87,18 +87,15 @@ export const usePNodes = (refreshInterval: number = 30000) => {
         currentSlot: 0,
       });
 
-      // Enrich with geo data (limit to avoid rate limiting)
-      const nodesWithIp = sortedNodes.filter(n => n.ip).slice(0, 10);
-      for (let i = 0; i < nodesWithIp.length; i += 3) {
-        const batch = nodesWithIp.slice(i, i + 3);
-        await Promise.all(
-          batch.map(node => {
-            const idx = sortedNodes.findIndex(n => n.pubkey === node.pubkey);
-            return enrichNodeWithGeo(node, idx);
-          })
-        );
-        if (i + 3 < nodesWithIp.length) {
-          await new Promise(r => setTimeout(r, 1000));
+      // Enrich with geo data (slower to avoid rate limiting - ip-api allows 45/min)
+      const nodesWithIp = sortedNodes.filter(n => n.ip).slice(0, 17);
+      for (let i = 0; i < nodesWithIp.length; i++) {
+        const node = nodesWithIp[i];
+        const idx = sortedNodes.findIndex(n => n.pubkey === node.pubkey);
+        await enrichNodeWithGeo(node, idx);
+        // Wait 1.5s between requests to stay under rate limit
+        if (i < nodesWithIp.length - 1) {
+          await new Promise(r => setTimeout(r, 1500));
         }
       }
     } catch (error) {
